@@ -33,30 +33,26 @@ document.addEventListener('keydown', function (e) {
 
 btnScrollTo.addEventListener('click', e => {
   const s1coords = section1.getBoundingClientRect();
-
-  console.log(s1coords);
-
-  console.log(e.target.getBoundingClientRect());
-
-  console.log('Current scroll (X/Y)', window.scrollX, window.scrollY);
-
-  console.log(
-    'height/width viewport',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  );
-
-  //Scrolling
-  // window.scrollTo(
-  //   s1coords.left + window.scrollX,
-  //   s1coords.top + window.scrollY
-  // );
-
-  // window.scrollTo({
-  //   left: s1coords.left + window.scrollX,
-  //   top: s1coords.top + window.scrollY,
-  //   behavior: 'smooth',
-  // });
-
   section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+// First solution
+
+// document.querySelectorAll('.nav__link').forEach(function (el) {
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   });
+// });
+
+// Event delegation solution
+document.querySelector('.nav__links').addEventListener('click', e => {
+  e.preventDefault();
+
+  // Matching strategy
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
 });
